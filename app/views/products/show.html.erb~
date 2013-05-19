@@ -19,7 +19,7 @@
 
 <div class="form-actions">
   <%= link_to t('.new', :default => t("helpers.links.Acheter")),
-            new_order_path(:product_id => @product.id),
+            new_order_path(:product_id => product.id),
             :class => 'btn' %>
   
 </div>

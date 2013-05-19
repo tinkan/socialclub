@@ -15,7 +15,7 @@ end
 
  def self.with_category with_category
   return scoped unless with_category.present?
-  where(['category_id = ? ', "#{with_category.to_i}"])
+  where(['category_id LIKE ? ', "#{with_category.to_i}"])
 end
 
  def self.with_user_id with_user_id

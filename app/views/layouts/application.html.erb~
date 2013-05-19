@@ -21,9 +21,9 @@
 
 			Parcourir par catégories<b class="caret"></b></a>
             <ul class="dropdown-menu">
-              <li><a href="#"><%= link_to "Vehicules", products_path(category: 1) %></a></li>
-			  <li><a href="#"><%= link_to "Informatique", products_path(category: 2) %></a></li>
-			  <li><a href="#"><%= link_to "Hi Fi", products_path(category: 3) %></a></li>
+              <li><a href="#"><%= link_to "Vehicules", products_path(category: "1") %></a></li>
+			  <li><a href="#"><%= link_to "Informatique", products_path(category: "2") %></a></li>
+			  <li><a href="#"><%= link_to "Hi Fi", products_path(category: "3") %></a></li>
               <li class="divider"></li>
               <li><a href="#"><%= link_to "ALL categories", products_path  %></a></li>
             </ul>

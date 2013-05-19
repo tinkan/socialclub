@@ -5,7 +5,7 @@
      <%= link_to '(modifiez vos données)', edit_user_registration_path %>
 </p>
 
-<p align="right"> Votre solde :<%= @user.sold.to_f %> BTC <p>
+<p align="right"> Votre solde :<%= @user.sold %> BTC <p>
 <p>   </p>
 
 <%- model_class = Product -%>
