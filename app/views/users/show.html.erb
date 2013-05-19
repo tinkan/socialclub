@@ -8,7 +8,12 @@
 
 <%- model_class = Product -%>
 
-<h4> Vos annonces :</h4>
+<h4> Vos annonces :</h4> 
+<p align = "right" >
+	<%= link_to t('.new', :default => t("helpers.links.creer une annonce")),
+            new_product_path,
+            :class => 'btn' %>
+</p>
 
 <table class="table table-hover">
   <thead>
@@ -48,15 +53,11 @@
   </tbody>
 </table>
 
-
-<%= link_to t('.new', :default => t("helpers.links.creer une annonce")),
-            new_product_path,
-            :class => 'btn' %>
-			
 			
  <%- model_class = Order -%>
 
 <h4> Vos achats :</h4>
+
 
 <table class="table table-hover">
   <thead>
@@ -91,20 +92,19 @@
 	  <th><%= model_class.human_attribute_name(:Categorie) %></th>
 	  <th><%= model_class.human_attribute_name(:Name) %></th>
       <th><%= model_class.human_attribute_name(:Description) %></th>
-	  <th><%= model_class.human_attribute_name(:Vendeur) %></th>
 	  <th><%= model_class.human_attribute_name(:Prix) %></th>
 
     </tr>
   </thead>
   <tbody>
-    <% Order.joins(:products).where("user_id", current_user).find do |order|  %>
+    <% @current_user.orders.each do |order|  %>
       <tr>
-	    <td><%= order.product.category.name %></td>
+	    <% if order.product.user.id == current_user.id %>
+	     <td><%= order.product.category.name %></td>
 		<td><%= order.product.name %></td>
 		<td><%= order.product.description %></td>
-		<td><%= order.product.user.email %></td>
-		<td><%= order.product.price %> BTC </td>
-
+		<td><%= order.product.price %> BTC </td>        
+		<% end %>
 	  </tr>
     <% end %>
   </tbody>
