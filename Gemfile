@@ -13,6 +13,10 @@ gem 'twitter-bootstrap-rails'
 
 gem 'less-rails'
 
+gem 'rails_bootstrap_navbar'
+
+gem 'activeadmin'
+
 
 # Gems used only for assets and not required
 # in production environments by default.

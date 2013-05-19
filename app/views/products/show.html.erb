@@ -1,30 +1,25 @@
-<p id="notice"><%= notice %></p>
+<%- model_class = Product -%>
+<div class="page-header">
+<h1><dt><p style="margin-left:5em;"><strong><%= @product.name %></strong> </p></dt></h1>
+</div>
 
-<p>
-  <b>Name:</b>
-  <%= @product.name %>
-</p>
+ <image width="310" height="200" src="<%= @product.image_url %>"</image>
+<dl class="dl-horizontal">
 
-<p>
-  <b>Description:</b>
-  <%= @product.description %>
-</p>
+  
+  <dt><strong><%= model_class.human_attribute_name(:description) %>:</strong></dt>
+  <dd><%= @product.description %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:prix) %>:</strong></dt>
+  <dd><%= @product.price %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:categorie) %>:</strong></dt>
+  <dd><%= @product.category.name %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:vendeur) %>:</strong></dt>
+  <dd><%= @product.user.email %></dd>
+</dl>
 
-<p>
-  <b>Price:</b>
-  <%= @product.price %>
-</p>
-
-<p>
-  <b>Category:</b>
-  <%= @product.category_id %>
-</p>
-
-<p>
-  <b>User:</b>
-  <%= @product.user_id %>
-</p>
-
-
-<%= link_to 'Edit', edit_product_path(@product) %> |
-<%= link_to 'Back', products_path %>
+<div class="form-actions">
+  <%= link_to t('.new', :default => t("helpers.links.Acheter")),
+            new_order_path,
+            :class => 'btn' %>
+  
+</div>

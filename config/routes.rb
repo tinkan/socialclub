@@ -1,12 +1,24 @@
 Socialclub::Application.routes.draw do
- root :to => 'products#index'
+  root to: "products#index"
+
+  devise_for :admin_users, ActiveAdmin::Devise.config  
+  devise_for :users, :path => "auth", :path_names => { :sign_in => 'login', :sign_out => 'logout', :password => 'secret', :confirmation => 'verification', :unlock => 'unblock', :registration => 'register', :sign_up => 'cmon_let_me_in', :show => 'show', }
+  ActiveAdmin.routes(self)
+	
+  resources :users
+  match 'users/:id' => 'users#show'
+   
+
+  resources :orders
+
+
+  resources :categories
 
   resources :products
 
-devise_for :users, :path => "auth", :path_names => { :sign_in => 'login', :sign_out => 'logout', :password => 'secret', :confirmation => 'verification', :unlock => 'unblock', :registration => 'register', :sign_up => 'cmon_let_me_in', :show => 'show', }
-match 'users/:id' => 'users#show'
-resources :users 
-   
+
+
+
 
 
 

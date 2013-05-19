@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Product:</b>
+  <%= @order.product.name %>
+</p>
+
+<p>
+  <b>Acheteur:</b>
+  <%= @order.user.email %>
+</p>
+<p>
+  <b>Vendeur:</b>
+  <%= @order.product.user.email %>
+</p>
+
+<b>Prix:</b>
+  <%= @order.product.price %> BTC
+</p>
+
+
+
+
+<%= link_to 'Edit', edit_order_path(@order) %> |
+<%= link_to 'Back', orders_path %>

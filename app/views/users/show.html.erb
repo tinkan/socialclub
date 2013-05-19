@@ -1,8 +1,114 @@
 
 
-<p>
-  <b>Name:</b>
-  <%= @user.email %>
+<p align="right">
+ <b > <%= @user.email %> </b>
+     <%= link_to '(modifiez vos données)', edit_user_registration_path %>
 </p>
+<p>   </p>
+
+<%- model_class = Product -%>
+
+<h4> Vos annonces :</h4>
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+	  <th><%= model_class.human_attribute_name(:Categorie) %></th>
+	  <th><%= model_class.human_attribute_name(:Name) %></th>
+      <th><%= model_class.human_attribute_name(:Description) %></th>
+
+    </tr>
+  </thead>
+  <tbody>
+    <% @current_user.products.each do |product|  %>
+      <tr>
+		<td><%= product.category.name %></td>
+
+        <td><%= product.name %></td>
+        <td><%= product.description %></td>
+		<td>
+		  <%= link_to t('.show', :default => t("helpers.links.voir")),
+                      product_path(product), :class => 'btn btn-mini disabled' %>
+		</td>
+		<td>
+          <%= link_to t('.show', :default => t("helpers.links.editer")),
+                     edit_product_path(product), :class => 'btn btn-mini btn-primary disabled' %>
+		</td>
+				 
+		<td>
+		  <%= link_to t('.destroy', :default => t("helpers.links.supprimer")),
+                      product_path(product),
+                      :method => :delete,
+                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                      :class => 'btn btn-mini btn-danger disabled' %></p>
+
+		</td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
 
 
+<%= link_to t('.new', :default => t("helpers.links.creer une annonce")),
+            new_product_path,
+            :class => 'btn' %>
+			
+			
+ <%- model_class = Order -%>
+
+<h4> Vos achats :</h4>
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+	  <th><%= model_class.human_attribute_name(:Categorie) %></th>
+	  <th><%= model_class.human_attribute_name(:Name) %></th>
+      <th><%= model_class.human_attribute_name(:Description) %></th>
+	  <th><%= model_class.human_attribute_name(:Vendeur) %></th>
+	  <th><%= model_class.human_attribute_name(:Prix) %></th>
+
+    </tr>
+  </thead>
+  <tbody>
+    <% @current_user.orders.each do |order|  %>
+      <tr>
+	    <td><%= order.product.category.name %></td>
+		<td><%= order.product.name %></td>
+		<td><%= order.product.description %></td>
+		<td><%= order.product.user.email %></td>
+		<td><%= order.product.price %> BTC </td>
+
+	  </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h4> Vos ventes :</h4>
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+	  <th><%= model_class.human_attribute_name(:Categorie) %></th>
+	  <th><%= model_class.human_attribute_name(:Name) %></th>
+      <th><%= model_class.human_attribute_name(:Description) %></th>
+	  <th><%= model_class.human_attribute_name(:Vendeur) %></th>
+	  <th><%= model_class.human_attribute_name(:Prix) %></th>
+
+    </tr>
+  </thead>
+  <tbody>
+    <% Order.joins(:products).where("user_id", current_user).find do |order|  %>
+      <tr>
+	    <td><%= order.product.category.name %></td>
+		<td><%= order.product.name %></td>
+		<td><%= order.product.description %></td>
+		<td><%= order.product.user.email %></td>
+		<td><%= order.product.price %> BTC </td>
+
+	  </tr>
+    <% end %>
+  </tbody>
+</table>
+			
+
+		
