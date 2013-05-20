@@ -32,8 +32,8 @@
     <% @current_user.products.each do |product|  %>
       <tr>
 		<td><%= product.category.name %></td>
-                <td><%= product.name %></td>
-                <td><%= product.description %></td>
+		<td><%= product.name %></td>
+		<td><%= product.description %></td>
 		<td><%= product.price %> BTC </td>
 		<td>
 		  <%= link_to t('.show', :default => t("helpers.links.voir")),
@@ -69,61 +69,49 @@
 <table class="table table-hover">
   <thead>
     <tr>
-	  <th><%= model_class.human_attribute_name(:Categorie) %></th>
 	  <th><%= model_class.human_attribute_name(:Produit) %></th>
       <th><%= model_class.human_attribute_name(:Description) %></th>
 	  <th><%= model_class.human_attribute_name(:Vendeur) %></th>
 	  <th><%= model_class.human_attribute_name(:Prix) %></th>
-
     </tr>
   </thead>
   <tbody>
     <% @current_user.orders.each do |order|  %>
       <tr>
-	    <td><%= order.product.category.name %></td>
-		<td><%= order.product.name %></td>
+		<td><%=link_to order.product.name, order_path(order) %></td>
 		<td><%= order.product.description %></td>
 		<td><%= order.product.user.email %></td>
 		<td><%= order.product.price %> BTC </td>
-
 	  </tr>
     <% end %>
   </tbody>
 </table>
 </div>
     <div class="span4">
-
       <p><h4> Vos ventes :</h4>
-<div class="traitgauche">
-
-<table class="table table-hover">
-  <thead>
-    <tr>
-	  <th><%= model_class.human_attribute_name(:Categorie) %></th>
-	  <th><%= model_class.human_attribute_name(:Produit) %></th>
-      <th><%= model_class.human_attribute_name(:Description) %></th>
-	  <th><%= model_class.human_attribute_name(:Prix) %></th>
-<!-----	  <th><%= model_class.human_attribute_name(:Acheteur) %></th> ------>
-	  
-
-    </tr>
-  </thead>
+		<div class="traitgauche">
+		  <table class="table table-hover">
+			<thead>
+              <tr>
+	            <th><%= model_class.human_attribute_name(:Produit) %></th>
+				<th><%= model_class.human_attribute_name(:Prix) %></th>
+	            <th><%= model_class.human_attribute_name(:Acheteur) %></th>	
+				<th><%= model_class.human_attribute_name(:Date) %></th>  
+              </tr>
+            </thead>
   <tbody>
-    <% Product.joins(:orders).each do |order|  %>
-      <tr>
-	    <% if order.user.id == current_user.id %>
-		
-		  <td><%= order.category.name %></td>
-		  <td><%= order.name %></td>
-		  <td><%= order.description %></td>
-		  <td><%= order.price %> BTC </td> 
-	<!----<td><%= order.user.email %> </td>  ----->
-						
-         
+	  <% @orders = Order.all %>
+      <% @orders.each do |order|  %>
+       <tr>
+	    <% if order.seller == current_user.id %>
+		  <td><%= link_to order.product.name,  order_path(order) %></td>
+		  <td><%= order.product.price %> BTC </td> 
+          <td><%= order.user.email %> </td>  
+		   <td><%= order.created_at %> </td> 						
 		<% end %>
-	  </tr>
-    <% end %>
-  </tbody>
+	   </tr>
+	  <% end %>
+   </tbody>
 </table>
 </p>        
     </div>

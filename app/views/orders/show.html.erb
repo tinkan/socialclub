@@ -1,5 +1,8 @@
 <p id="notice"><%= notice %></p>
 
+
+<image width="310" height="200" src="<%= @order.product.image_url %>"</image>
+
 <p>
   <b>Product:</b>
   <%= @order.product.name %>
@@ -14,6 +17,12 @@
   <%= @order.product.user.email %>
 </p>
 
+
+
+<b>Adresse de livraison:</b>
+  <%= @order.address %> 
+</p>
+
 <b>Prix:</b>
   <%= @order.product.price %> BTC
 </p>
@@ -21,5 +30,3 @@
 
 
 
-<%= link_to 'Edit', edit_order_path(@order) %> |
-<%= link_to 'Back', orders_path %>

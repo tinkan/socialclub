@@ -1,33 +1,28 @@
 class OrdersController < ApplicationController
   # GET /orders
   # GET /orders.json
- # def index
-  #  @orders = Order.all
+  #def index
+  #  @orders = Order.find(:all, :order => 'date ASC')
 #
- #   respond_to do |format|
-#      format.html # index.html.erb
- #     format.json { render json: @orders }
- #   end
-#  end
+   #respond_to do |format|
+  #   format.html # index.html.erb
+	#format.json { render json: @orders }
+# end
 
   # GET /orders/1
   # GET /orders/1.json
   def show
-    @order = Order.find(params[:id])
-
+    @order = Order.where('seller = ? OR user_id = ?', current_user.id, current_user.id).find(params[:id])
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @order }
-    end
+	end
   end
 
   # GET /orders/new
   # GET /orders/new.json
   def new
-    @order = Order.new
-	
-
-	
+    @order = Order.new	
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @order }
@@ -44,19 +39,32 @@ class OrdersController < ApplicationController
   def create 
 
 	@order =  current_user.orders.build (params[:order])
-
-
-
-
-    respond_to do |format|
-      if @order.save
-        format.html { redirect_to @order, notice: 'Order was successfully created.' }
+	 
+	if current_user.sold >= @order.product.price
+     respond_to do |format|
+       @order.save
+        format.html { redirect_to @order, notice: 'Votre achat a ete effectue avec succes' }
         format.json { render json: @order, status: :created, location: @order }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @order.errors, status: :unprocessable_entity }
+		current_user.sold -= @order.product.price
+	    current_user.save
+	    @order.product.user.sold += @order.product.price
+	    @order.product.user.save
+		@order.seller = @order.product.user_id
+		@order.save
+       end
+	end 
+	if current_user.sold < @order.product.price
+	respond_to do |format|
+	 format.html { redirect_to @order.product, notice: "Fonds insuffisants." }
+	 format.json { render json: @order.errors, status: :unprocessable_entity}
       end
-    end
+	   respond_to do |format|
+	 format.html { redirect_to products_path, notice: "Vous devez entrer une adresse valide" }
+	 format.json { render json: @order.errors, status: :unprocessable_entity}
+     end
+
+	end
+
   end
 
   # PUT /orders/1

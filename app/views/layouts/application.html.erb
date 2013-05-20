@@ -15,7 +15,8 @@
       </a>
       <a class="brand" href="#">Socialclub</a>
       <div class="nav-collapse">
-        <ul class="nav">
+		<ul class="nav">
+		  <li><%= link_to "Accueil", products_path %></li>
           <li  class="dropdown">
 			<a  href="#" class="dropdown-toggle" data-toggle="dropdown"> 
 
@@ -32,6 +33,7 @@
 		</ul>
 		 <ul class="nav pull-right">          
 		  <% if user_signed_in? %>
+	
 		     <% else %>
              <li align="right"><%= link_to "S'inscrire", new_user_registration_path %>  </li>
 			 <li><%= link_to "S'authentifier", new_user_session_path %> </li>
@@ -41,20 +43,21 @@
       </div>
 	  
 	    <% if user_signed_in? %>
-
-		    <div class="nav-collapse collapse">
+			<div class="nav-collapse collapse">
             <ul class="nav pull-right">
             <li  class="dropdown">
 	
 			<a  href="#" class="dropdown-toggle" data-toggle="dropdown"> <i class="icon-user icon-white"></i>
 
-			Mon compte<b class="caret"></b></a>
+			<%= current_user.email %><b class="caret"></b></a>
             <ul class="dropdown-menu">
               <li><a href="#"><%= link_to "Mon Profil", current_user %></a></li>
               <li class="divider"></li>
-              <li><a href="#"><%= link_to "Sign out", destroy_user_session_path  %></a></li>
+              <li><a href="#"><%= link_to "Deconnexion", destroy_user_session_path  %></a></li>
             </ul>
+			
           </li>
+		 	
         </ul>
       </div><!--/.nav-collapse -->
 	  
@@ -75,6 +78,24 @@
 
 </div>
 
+ <% if user_signed_in? %>
+
+<!---<p align="right"> Balance : <%= current_user.sold %> BTC</p>--->
+
+  
+ <% @orders = Order.all %>
+  <% notif=0 %>
+      <% @orders.each do |order|  %>
+       <tr>
+	    <% if order.seller == current_user.id %>
+		  <% if current_user.last_sign_in_at <= order.created_at %>
+		    <% notif += 1 %>
+            <p align="right"> Notification <%= notif %> <%= link_to 'Voir',  order_path(order) %></p>
+
+	        <%end %>
+          <% end %>
+	     <% end %> 
+ <% end %>
 
 <%= yield %>
 
