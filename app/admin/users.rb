@@ -6,6 +6,7 @@ form do |f|
     f.input :password
     f.input :password_confirmation
 	f.input :sold
+	f.input :seller
   end
   f.buttons
 end

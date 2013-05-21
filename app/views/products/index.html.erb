@@ -1,26 +1,34 @@
 <%- model_class = Product -%>
 
+<hr style="width:1005px; background-color:skyblue; height:1px;" /> 
+
 <div class="page-header">
   <h3>Annonces</h3>
 </div>
- 
+
+
 
 <ul>
   <% @products.each_slice(3) do |slice| %>
-    <div class="row item-row">
-      <% slice.each do |product| %>
-        <div class="span4">
-        <p>  <%= link_to(image_tag(product.image_url, width: 150, height: 150), product_path(product)) %> </p>
-		<p><b>Categorie : </b> <%= product.category.name %> </p>
-		<p><b>Produit :</b>	<%= product.name %> </p>
-		<p><b> Prix :</b> <%= product.price %> euros </p>
-		<p><b>Vendeur :</b> <%= product.user.email %> </p>
-          <%= link_to t('.new', :default => t("helpers.links.Acheter")),
-            new_order_path(:product_id => product.id) %>
-		<p>   </p>
-        </div>
+  <div class="row item-row">
+    <% slice.each do |product| %>
+    <div class="span4">
+      <% if product.vente == true %>
+      <p>  <%= link_to(image_tag(product.image_url, width: 150, height: 150), product_path(product)) %> </p>
+      <p><b>Categorie : </b> <%= product.category.name %> </p>
+      <p><b>Produit :</b>	<%= product.name %> </p>
+      <p><b> Prix :</b> <%= product.price %> BTC </p>
+      <p><b>Vendeur :</b> <%= product.user.email %> </p>
+      <div class="form-actions">
+        <%= link_to t('.new', :default => t("helpers.links.Acheter")),
+        new_order_path(:product_id => product.id),
+        :class => 'btn' %>
+      </div>
+      <p>   </p>
       <% end %>
-    </div> 
+    </div>
+    <% end %>
+  </div> 
   <% end %>
 </ul>
 

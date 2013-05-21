@@ -1,0 +1,31 @@
+<%- model_class = Order -%>
+
+<div class="span12">
+    <p><h4> Vos ventes :</h4>
+      <div class="traitgauche">
+        <table class="table table-hover">
+         <thead>
+          <tr>
+           <th><%= model_class.human_attribute_name(:Produit) %></th>
+           <th><%= model_class.human_attribute_name(:Prix) %></th>
+           <th><%= model_class.human_attribute_name(:Acheteur) %></th>	
+           <th><%= model_class.human_attribute_name(:Date) %></th>  
+         </tr>
+       </thead>
+       <tbody>
+         <% @orders = Order.order("created_at DESC") %>
+         <% @orders.each do |order|  %>
+         <tr>
+           <% if order.seller == current_user.id %>
+           <td><%= link_to order.product.name,  order_path(order) %></td>
+           <td><%= order.product.price %> BTC </td> 
+           <td><%= order.user.email %> </td>  
+           <td><%= order.created_at %> </td> 						
+           <% end %>
+         </tr>
+         <% end %>
+       </tbody>
+     </table>
+   </p>        
+ </div>
+</div>

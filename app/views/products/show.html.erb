@@ -1,15 +1,12 @@
 
 
 <%- model_class = Product -%>
-<p id="notice"><%= notice %></p>
+
 <div class="page-header">
-<h1><dt><p style="margin-left:5em;"><strong><%= @product.name %></strong> </p></dt></h1>
+  <h1><dt><p style="margin-left:5em;"><strong><%= @product.name %></strong> </p></dt></h1>
 </div>
-
- <image width="310" height="200" src="<%= @product.image_url %>"</image>
+<image width="310" height="200" src="<%= @product.image_url %>"</image>
 <dl class="dl-horizontal">
-
-  
   <dt><strong><%= model_class.human_attribute_name(:description) %>:</strong></dt>
   <dd><%= @product.description %></dd>
   <dt><strong><%= model_class.human_attribute_name(:prix) %>:</strong></dt>
@@ -19,10 +16,8 @@
   <dt><strong><%= model_class.human_attribute_name(:vendeur) %>:</strong></dt>
   <dd><%= @product.user.email %></dd>
 </dl>
-
 <div class="form-actions">
   <%= link_to t('.new', :default => t("helpers.links.Acheter")),
-            new_order_path(:product_id => @product.id),
-            :class => 'btn' %>
-  
+  new_order_path(:product_id => @product.id),
+  :class => 'btn' %>
 </div>

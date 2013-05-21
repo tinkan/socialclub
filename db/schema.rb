@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130520171043) do
+ActiveRecord::Schema.define(:version => 20130521153315) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -72,6 +72,7 @@ ActiveRecord::Schema.define(:version => 20130520171043) do
     t.datetime "updated_at",  :null => false
     t.string   "image_url"
     t.integer  "product_id"
+    t.boolean  "vente"
   end
 
   create_table "users", :force => true do |t|
@@ -89,6 +90,7 @@ ActiveRecord::Schema.define(:version => 20130520171043) do
     t.datetime "updated_at",                             :null => false
     t.float    "sold"
     t.date     "last_log"
+    t.boolean  "seller"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

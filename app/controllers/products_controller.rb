@@ -1,12 +1,12 @@
 class ProductsController < ApplicationController
 
-before_filter :authenticate_user!
-skip_before_filter :authenticate_user! , :only => [:index, :show] 
+  before_filter :authenticate_user!
+  skip_before_filter :authenticate_user! , :only => [:index, :show] 
  # GET /products
   # GET /products.json
   def index
     @products = params[:category].blank? ? Product.all : Product.with_category(params[:category]).all
-	
+
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @products }
@@ -28,7 +28,7 @@ skip_before_filter :authenticate_user! , :only => [:index, :show]
   # GET /products/new.json
   def new
     @product=Product.new
-	    
+
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @product }
@@ -45,10 +45,11 @@ skip_before_filter :authenticate_user! , :only => [:index, :show]
   # POST /products.json
   def create
     @product =  current_user.products.build params[:product]
+    @current_user.seller = true
+    @current_user.save
 
     respond_to do |format|
       if @product.save
-	
         format.html { redirect_to @product, notice: 'Product was successfully created.' }
         format.json { render json: @product, status: :created, location: @product }
       else
@@ -56,7 +57,6 @@ skip_before_filter :authenticate_user! , :only => [:index, :show]
         format.json { render json: @product.errors, status: :unprocessable_entity }
       end
     end
-	 
   end
 
   # PUT /products/1
@@ -80,10 +80,10 @@ skip_before_filter :authenticate_user! , :only => [:index, :show]
   def destroy
     @product = current_user.products.find(params[:id])
     @product.destroy
-
+    
     respond_to do |format|
       format.html { redirect_to products_url }
       format.json { head :no_content }
     end
   end
- end
+end
