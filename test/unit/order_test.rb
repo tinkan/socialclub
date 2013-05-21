@@ -17,14 +17,13 @@ class OrderTest < ActiveSupport::TestCase
   end
 
   test 'orders should validate the user balance' do
-  	order = FactoryGirl.build(:order)
+    order = FactoryGirl.build(:order)
 
-	assert !order.valid?, "La commande devrait-être invalide, l'acheteur n'a pas assez d'argent"
+    assert !order.valid?, "La commande devrait-être invalide, l'acheteur n'a pas assez d'argent"
 
-	order.user.sold = 20
+    order.user.sold = 20
 
     order.save!
-	assert order.valid?, "La commande devrait-être valide car l'acheteur a les moyens"
-
+    assert order.valid?, "La commande devrait-être valide car l'acheteur a les moyens"
   end
 end

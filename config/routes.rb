@@ -9,7 +9,7 @@ Socialclub::Application.routes.draw do
   match 'users/:id' => 'users#show'
    
 
-  resources :orders
+  resources :orders, only: [:show, :new, :create]
 
 
   resources :categories

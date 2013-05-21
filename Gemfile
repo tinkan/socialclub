@@ -35,6 +35,9 @@ gem 'factory_girl'
 
 gem 'jquery-rails'
 
+gem 'pry'
+
+gem 'pry-debugger'
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 

@@ -1,0 +1,39 @@
+= form_for @product, :html => { :class => 'form-horizontal' } do |f|
+  = render partial: 'layouts/errors', locals: { model: @product, message: "Votre produit n'a pu être créé :" }
+
+  .control-group
+    = f.label :nom, :class => 'control-label'
+    .controls
+      = f.text_field :name, :class => 'text_field'
+
+  .control-group
+    = f.label :description, :class => 'control-label'
+    .controls
+      = f.text_field :description, :class => 'text_field'
+
+  .control-group
+    = f.label :prix, :class => 'control-label'
+    .controls
+      = f.text_field :price, :class => 'text_field'
+      BTC
+    
+  .control-group
+    = f.label :categorie, :class => 'control-label'
+    .controls
+      = f.select :category_id, options_from_collection_for_select(Category.find(:all), :id, :name)
+
+  .control-group
+    = f.label :image_url, :class => 'control-label'
+    .controls
+      = f.text_field :image_url, :class => 'text_field'
+  
+  .control-group
+    .controls
+      %label.checkbox{ for: 'product_vente' }
+        = f.check_box :vente
+        Afficher le produit à la vente
+
+  .form-actions
+    = f.submit nil, :class => 'btn btn-primary'
+    = link_to t('.cancel', :default => t("helpers.links.cancel")), products_path, :class => 'btn'
+  
